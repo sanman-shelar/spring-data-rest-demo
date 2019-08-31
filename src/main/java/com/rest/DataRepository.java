@@ -13,7 +13,7 @@ public interface DataRepository extends JpaRepository<ParentTable, String> {
 	
 	public Optional<List<ParentTable>> findBySsn(String ssn);
 	
-	@Query("select p from ParentTable p join p.childTable c where c.cattr = :cattr")
+	@Query("select distinct p from ParentTable p join p.childTable c where c.cattr = :cattr")
 	public Optional<List<ParentTable>> findByChildTable(@Param("cattr") String cattr);
 	
 }

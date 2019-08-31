@@ -27,7 +27,7 @@ public class ParentTable {
 	private String attr;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "parentTable", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(mappedBy = "parentTable", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ChildTable> childTable = new ArrayList<>();
 
 	public ParentTable() {
