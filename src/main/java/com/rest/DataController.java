@@ -1,9 +1,9 @@
 package com.rest;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ public class DataController {
 
 	@GetMapping("/st/{cattr}")
 	public @ResponseBody Optional<List<ParentTable>> findDataUsingAttribute(@PathVariable String cattr) {
-		return dataRepository.findByChildTable(cattr);
+		return dataRepository.findByChildTable(cattr,LocalDate.of(9999, Month.DECEMBER, 12),LocalDate.of(9999, Month.DECEMBER, 12));
 	}
 
 	@PostMapping
@@ -41,12 +41,15 @@ public class DataController {
 		ParentTable p1 = new ParentTable();
 		p1.setSsn("34343434");
 		p1.setAttr("N");
+		p1.setEndDate(LocalDate.of(9999, Month.DECEMBER, 12));
 		
 		ChildTable c1 = new ChildTable();
 		c1.setCattr("NY");
+		c1.setEndDate(LocalDate.of(9999, Month.DECEMBER, 12));
 		
 		ChildTable c2 = new ChildTable();
 		c2.setCattr("CA");
+		c2.setEndDate(LocalDate.of(9999, Month.DECEMBER, 12));
 		
 		p1.getChildTable().add(c1);
 		p1.getChildTable().add(c2);
@@ -62,14 +65,14 @@ public class DataController {
 		
 		ParentTable p2 = op2.get();
 		
+		p2.getChildTable().get(0).setEndDate(LocalDate.of(2019, Month.DECEMBER, 22));
+		
 		ChildTable c3 = new ChildTable();
 		c3.setCattr("DZ");
-		
-		Set<ChildTable> x = p2.getChildTable().stream().collect(Collectors.toSet());
-		x.add(c3);
+		c3.setEndDate(LocalDate.of(9999, Month.DECEMBER, 12));
 		
 		p2.getChildTable().add(c3);
-		dataRepository.save(p2);
+		dataRepository.saveAndFlush(p2);
 		return p2;
 	}
 	

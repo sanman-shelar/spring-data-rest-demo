@@ -1,7 +1,8 @@
 package com.rest;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,9 +28,10 @@ public class ParentTable {
 	private String id;
 	private String ssn;
 	private String attr;
+	private LocalDate endDate;
 
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "id", referencedColumnName = "id", nullable = false, updatable = false)
-	private Set<ChildTable> childTable = new HashSet<>();
+	private List<ChildTable> childTable = new ArrayList<>();
 	
 }
