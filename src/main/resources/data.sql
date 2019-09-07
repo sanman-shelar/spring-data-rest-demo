@@ -1,15 +1,16 @@
 DROP TABLE IF EXISTS parent_table;
 DROP TABLE IF EXISTS child_table;
+DROP TABLE IF EXISTS PARENT_TABLE_CHILD_TABLE;
 
 CREATE TABLE parent_table (
-  id VARCHAR(255) PRIMARY KEY,
+  id VARCHAR(255) NOT NULL PRIMARY KEY,
   ssn VARCHAR(10) NOT NULL,
   attr VARCHAR(250) NOT NULL,
   
 );
 
 CREATE TABLE child_table (
-  cid VARCHAR(255) PRIMARY KEY,
+  cid VARCHAR(255) NOT NULL PRIMARY KEY,
   id VARCHAR(255) NOT NULL,
   cattr VARCHAR(10) NOT NULL,
   foreign key (id) references parent_table(id)
