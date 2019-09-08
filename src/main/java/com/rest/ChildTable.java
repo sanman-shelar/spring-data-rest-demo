@@ -10,17 +10,24 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "child_table")
 @Data
+@NoArgsConstructor
 public class ChildTable {
 
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private String cid;
-	private String cattr;
+	private String cattr;	
 	private LocalDate endDate;
+	
+	public ChildTable(ChildTable childTable) {
 
+		this.cattr = childTable.cattr;
+		this.endDate = childTable.endDate;
+	}	
 }

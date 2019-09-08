@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,20 +61,26 @@ public class DataController {
 	}
 	
 	@PutMapping
-	public @ResponseBody ParentTable deleteData(@RequestBody ParentTable parentTable) {
+	public @ResponseBody ParentTable updateData(@RequestBody ParentTable parentTable) {
 		Optional<ParentTable> op2 = dataRepository.findById(parentTable.getId());
 		
 		ParentTable p2 = op2.get();
+		ParentTable p3 = new ParentTable(p2);
 		
-		p2.getChildTable().get(0).setEndDate(LocalDate.of(2019, Month.DECEMBER, 22));
 		
-		ChildTable c3 = new ChildTable();
-		c3.setCattr("DZ");
-		c3.setEndDate(LocalDate.of(9999, Month.DECEMBER, 12));
+		p2.setEndDate(LocalDate.of(2019, Month.DECEMBER, 22));
 		
-		p2.getChildTable().add(c3);
+		p2.setChildTable(p2.getChildTable().stream().peek(e -> {e.setEndDate(LocalDate.of(9999, Month.DECEMBER, 22));}).collect(Collectors.toList()));
 		dataRepository.saveAndFlush(p2);
-		return p2;
+
+		
+		ChildTable c1 = new ChildTable();
+		c1.setCattr("AL");
+		c1.setEndDate(LocalDate.of(9999, Month.DECEMBER, 12));
+		p3.getChildTable().add(c1);
+		p3.setAttr("Y");		
+		dataRepository.saveAndFlush(p3);
+		return p3;
 	}
 	
 	@DeleteMapping

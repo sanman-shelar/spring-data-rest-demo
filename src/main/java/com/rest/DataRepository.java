@@ -17,4 +17,5 @@ public interface DataRepository extends JpaRepository<ParentTable, String> {
 	@Query("select distinct p from ParentTable p join fetch p.childTable c where p.endDate = :pEndDate and c.endDate = :cEndDate and c.cattr = :cattr")
 	public Optional<List<ParentTable>> findByChildTable(@Param("cattr") String cattr, @Param("pEndDate") LocalDate pEndDate, @Param("cEndDate") LocalDate cEndDate);
 	
+	
 }
